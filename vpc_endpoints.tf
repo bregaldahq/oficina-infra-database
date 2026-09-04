@@ -45,3 +45,18 @@ resource "aws_vpc_endpoint" "secretsmanager" {
 
   tags = { Name = "${local.name_prefix}-secretsmanager-vpce" }
 }
+
+# The badge SG defines explicit egress rules, which means AWS denies everything
+# else — including the 443 needed to reach the interface endpoint above. Without
+# this rule the Lambda opens the Secrets Manager call, gets no route out, and
+# hangs until its timeout with no error to show for it.
+resource "aws_vpc_security_group_egress_rule" "db_client_to_vpc_endpoints" {
+  security_group_id            = aws_security_group.db_client.id
+  description                  = "HTTPS to the interface VPC endpoints"
+  from_port                    = 443
+  to_port                      = 443
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.vpc_endpoints.id
+
+  tags = { Name = "${local.name_prefix}-db-client-egress-443-vpce" }
+}
