@@ -6,3 +6,6 @@ db_allocated_storage        = 20
 db_backup_retention_days    = 7
 db_multi_az                 = false
 secret_recovery_window_days = 7
+
+# Performance Insights exige db.t3.medium ou maior; incompatível com t4g.micro.
+db_performance_insights = false
