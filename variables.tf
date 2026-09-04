@@ -103,3 +103,14 @@ variable "db_performance_insights" {
   type        = bool
   default     = false
 }
+
+variable "vpc_endpoint_single_az" {
+  description = <<-DESC
+    Places the interface VPC endpoints in a single AZ instead of all private subnets.
+
+    Halves the cost (~US$7.20/month per AZ) and is fine for homologation. Keep it false
+    in production so the endpoint survives an AZ failure.
+  DESC
+  type        = bool
+  default     = false
+}

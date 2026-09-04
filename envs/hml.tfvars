@@ -9,3 +9,4 @@ secret_recovery_window_days = 0
 
 # Performance Insights exige db.t3.medium ou maior; incompatível com t4g.micro.
 db_performance_insights = false
+vpc_endpoint_single_az  = true
