@@ -91,3 +91,26 @@ variable "secret_recovery_window_days" {
   type        = number
   default     = 0
 }
+
+variable "db_performance_insights" {
+  description = <<-DESC
+    Enables RDS Performance Insights.
+
+    Keep it false on burstable micro/small classes: AWS rejects CreateDBInstance with
+    "InvalidParameterCombination: Performance Insights not supported for this configuration".
+    PI requires db.t3.medium or larger. Turn this on together with a bigger db_instance_class.
+  DESC
+  type        = bool
+  default     = false
+}
+
+variable "vpc_endpoint_single_az" {
+  description = <<-DESC
+    Places the interface VPC endpoints in a single AZ instead of all private subnets.
+
+    Halves the cost (~US$7.20/month per AZ) and is fine for homologation. Keep it false
+    in production so the endpoint survives an AZ failure.
+  DESC
+  type        = bool
+  default     = false
+}
