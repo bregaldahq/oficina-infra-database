@@ -64,8 +64,8 @@ resource "aws_db_instance" "main" {
   maintenance_window      = "sun:05:30-sun:06:30"
   copy_tags_to_snapshot   = true
 
-  performance_insights_enabled          = true
-  performance_insights_retention_period = 7
+  performance_insights_enabled          = var.db_performance_insights
+  performance_insights_retention_period = var.db_performance_insights ? 7 : null
   enabled_cloudwatch_logs_exports       = ["error", "slowquery"]
 
   auto_minor_version_upgrade = true
